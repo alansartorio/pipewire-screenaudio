@@ -1,4 +1,6 @@
-function handleMessage(response) {
+const MESSAGE_NAME = 'com.icedborn.pipewirescreenaudioconnector'
+
+async function handleMessage(response, _, sendResponse) {
   if (response.message === 'sharing-started') {
     // Start pipewire-screenaudio
     chrome.runtime.sendNativeMessage(response.messageName, { cmd: response.cmd })
@@ -21,6 +23,10 @@ function handleMessage(response) {
         window.localStorage.setItem('micId', null)
         chrome.runtime.sendMessage('mic-id-removed')
       })
+  }
+
+  if (response.message === 'get-session-type') {
+    return chrome.runtime.sendNativeMessage(MESSAGE_NAME, { cmd: 'GetSessionType', args: [] })
   }
 }
 

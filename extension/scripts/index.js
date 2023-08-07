@@ -64,6 +64,15 @@ function overrideGdm () {
   navigator.mediaDevices.getDisplayMedia = getDisplayMedia
 }
 
-overrideGdm()
+overrideGdm();
 
-console.debug(window.sessionType)
+window.addEventListener("message", (event) => {
+  console.debug(event)
+});
+//(async function() {
+  //const {type} = await chrome.runtime.sendMessage({message: 'get-session-type'});
+  //window.sessionType = type
+
+  //console.debug(window.sessionType)
+//})()
+console.debug("AAAAAA", window.sessionType)
