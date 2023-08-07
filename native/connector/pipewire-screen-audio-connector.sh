@@ -31,6 +31,12 @@ function GetVersion () {
   toMessage '{"version":"0.2.0"}'
 }
 
+function GetSessionType () {
+  # https://unix.stackexchange.com/a/325972
+  type=`loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'`
+  toMessage "{\"type\": \"$type\"}"
+}
+
 function GetNodes () {
   local nodes=`pw-dump | jq -c '
     [{
@@ -107,9 +113,14 @@ payload=`head -c "$payloadLength"`
 cmd=`echo "$payload" | jq -r .cmd`
 args=`echo "$payload" | jq .args`
 
+echo $cmd >> /tmp/pipewire-screenaudio.log
+
 case $cmd in
   'GetVersion')
     GetVersion
+    ;;
+  'GetSessionType')
+    GetSessionType
     ;;
   'GetNodes')
     GetNodes "$args"
