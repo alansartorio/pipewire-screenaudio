@@ -66,13 +66,13 @@ function overrideGdm () {
 
 overrideGdm();
 
-window.addEventListener("message", (event) => {
-  console.debug(event)
-});
-//(async function() {
-  //const {type} = await chrome.runtime.sendMessage({message: 'get-session-type'});
-  //window.sessionType = type
+const onMessage = (event) => {
+  if (event.target !== window)
+    return;
+  if (event.data.message === "set-session-type") {
+    window.sessionType = event.data.type
+    window.removeEventListener("message", onMessage);
+  }
+};
 
-  //console.debug(window.sessionType)
-//})()
-console.debug("AAAAAA", window.sessionType)
+window.addEventListener("message", onMessage);

@@ -27,8 +27,7 @@ async function injectCode (src) {
   script.onload = async function () {
     console.debug('pipewire-screenaudio script injected')
 
-    chrome.runtime.sendMessage({type})
-    //chrome.runtime.sendMessage({session})
+    window.postMessage({message: "set-session-type", type})
 
     this.remove()
   }
