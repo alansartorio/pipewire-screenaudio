@@ -3,15 +3,17 @@ const nullthrows = (v) => {
   return v
 }
 
-async function injectCode (src) {
-  const {type} = await browser.runtime.sendMessage({message: 'get-session-type'});
-
+function injectCode (src) {
   const script = document.createElement('script')
   script.src = src
-  script.onload = async function () {
-    console.debug('pipewire-screenaudio script injected')
+  script.onload = function () {
+    console.log('pipewire-screenaudio script injected')
 
-    window.postMessage({message: "set-session-type", type})
+    browser.runtime
+      .sendMessage({ message: 'get-session-type' })
+      .then(({ type }) => {
+        window.postMessage({ message: "set-session-type", type })
+      });
 
     this.remove()
   }

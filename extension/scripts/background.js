@@ -1,6 +1,6 @@
 const MESSAGE_NAME = 'com.icedborn.pipewirescreenaudioconnector'
 
-async function handleMessage(response, _, sendResponse) {
+function handleMessage(response) {
   if (response.message === 'sharing-started') {
     // Start pipewire-screenaudio
     chrome.runtime.sendNativeMessage(response.messageName, { cmd: response.cmd })

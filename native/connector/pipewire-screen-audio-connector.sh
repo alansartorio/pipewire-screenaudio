@@ -113,8 +113,6 @@ payload=`head -c "$payloadLength"`
 cmd=`echo "$payload" | jq -r .cmd`
 args=`echo "$payload" | jq .args`
 
-echo $cmd >> /tmp/pipewire-screenaudio.log
-
 case $cmd in
   'GetVersion')
     GetVersion

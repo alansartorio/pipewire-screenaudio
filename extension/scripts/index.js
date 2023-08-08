@@ -64,9 +64,10 @@ function overrideGdm () {
   navigator.mediaDevices.getDisplayMedia = getDisplayMedia
 }
 
-overrideGdm();
+overrideGdm()
 
 // Store the session type we get (either "x11" or "wayland") into window.sessionType
+// This message gets sent from the onload listener in injector.js
 const onMessage = (event) => {
   if (event.target !== window)
     return;
