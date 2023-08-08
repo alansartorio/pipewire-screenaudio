@@ -66,6 +66,7 @@ function overrideGdm () {
 
 overrideGdm();
 
+// Store the session type we get (either "x11" or "wayland") into window.sessionType
 const onMessage = (event) => {
   if (event.target !== window)
     return;
