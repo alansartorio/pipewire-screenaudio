@@ -1,3 +1,5 @@
+const MESSAGE_NAME = 'com.icedborn.pipewirescreenaudioconnector'
+
 const nullthrows = (v) => {
   if (v == null) throw new Error('null')
   return v
@@ -10,8 +12,9 @@ function injectCode (src) {
     console.log('pipewire-screenaudio script injected')
 
     browser.runtime
-      .sendMessage({ message: 'get-session-type' })
+      .sendMessage({ messageName: MESSAGE_NAME, message: 'get-session-type' })
       .then(({ type }) => {
+        console.debug(type)
         window.postMessage({ message: "set-session-type", type })
       });
 
